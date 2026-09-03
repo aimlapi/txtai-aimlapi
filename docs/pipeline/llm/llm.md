@@ -122,10 +122,10 @@ llm = LLM("ollama/gpt-oss", api_base="http://localhost:11434")
 llm = LLM("openai/gpt-oss", api_base="http://localhost:4000")
 
 # LLM APIs - must also set API key via environment variable
+llm = LLM("aiml/openai/gpt-5-5")
 llm = LLM("gpt-5.2")
 llm = LLM("claude-opus-4-5-20251101")
 llm = LLM("gemini/gemini-3-pro-preview")
-llm = LLM("aiml/openai/gpt-5-5")
 
 # Local OpenCode server started via `opencode serve`
 llm = LLM("opencode")
