@@ -43,6 +43,19 @@ Builds embeddings using a [llama.cpp](https://github.com/abetlen/llama-cpp-pytho
 
 Builds embeddings using a LiteLLM model. See the [LiteLLM documentation](https://litellm.vercel.app/docs/providers) for the options available with LiteLLM models.
 
+Options for the underlying API call, such as the base URL of an OpenAI-compatible endpoint, are set with [vectors](#vectors).
+
+```yaml
+path: openai/text-embedding-3-large
+method: litellm
+vectors:
+    api_base: https://api.aimlapi.com/v1
+```
+
+The example above runs [aimlapi.com](https://aimlapi.com) embeddings and reads the key from `OPENAI_API_KEY`. Note that the `aiml/` model prefix used by the [LLM](../../../pipeline/llm/llm) pipeline is a chat-completions route only — LiteLLM raises `Unmapped LLM provider for this endpoint` when it's used with embeddings, so the OpenAI-compatible route above is required.
+
+Setting `api_key` in `vectors` also works but isn't recommended. The `vectors` configuration is stored in the index configuration, so [saving](../../methods/#txtai.embeddings.Embeddings.save) an index would write the key to disk in plain text.
+
 ### model2vec
 
 Builds embeddings using a [Model2Vec](https://github.com/MinishLab/model2vec) model. Model2Vec is a knowledge-distilled version of a transformers model with static vectors.

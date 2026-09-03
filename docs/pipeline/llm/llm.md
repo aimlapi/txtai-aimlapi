@@ -70,6 +70,8 @@ The LLM pipeline automatically detects the underlying LLM framework. This can al
 
 See the [LiteLLM documentation](https://litellm.vercel.app/docs/providers) for the options available with LiteLLM models.
 
+Each LLM API reads its key from its own environment variable. For example, [aimlapi.com](https://aimlapi.com) models are prefixed with `aiml/` and read `AIML_API_KEY`.
+
 See the [OpenCode documentation](https://opencode.ai/docs/server/) for more on how to integrate the LLM pipeline with a running OpenCode instance.
 
 ```python
@@ -107,6 +109,7 @@ llm = LLM("openai/gpt-oss", api_base="http://localhost:4000")
 llm = LLM("gpt-5.2")
 llm = LLM("claude-opus-4-5-20251101")
 llm = LLM("gemini/gemini-3-pro-preview")
+llm = LLM("aiml/openai/gpt-5-5")
 
 # Local OpenCode server started via `opencode serve`
 llm = LLM("opencode")
