@@ -70,6 +70,24 @@ The LLM pipeline automatically detects the underlying LLM framework. This can al
 
 See the [LiteLLM documentation](https://litellm.vercel.app/docs/providers) for the options available with LiteLLM models.
 
+Each LLM API reads its key from its own environment variable. For example, [aimlapi.com](https://aimlapi.com) models are prefixed with `aiml/` and read `AIML_API_KEY`.
+
+`LLM` forwards unknown keyword arguments to the underlying LiteLLM call, so a provider's own headers can be set at construction. aimlapi.com uses these to attribute traffic to the calling application:
+
+```python
+llm = LLM(
+    "aiml/openai/gpt-4o-mini",
+    extra_headers={
+        "HTTP-Referer": "https://github.com/neuml/txtai",
+        "X-Title": "txtai",
+        "X-AIMLAPI-Source": "agent/txtai",
+        "X-AIMLAPI-Partner-ID": "part_O0eykPA6gQNIFEYaUBojBbU4",
+    },
+)
+```
+
+The headers carry no key, no prompt and nothing identifying the end user — only which application made the call.
+
 See the [OpenCode documentation](https://opencode.ai/docs/server/) for more on how to integrate the LLM pipeline with a running OpenCode instance.
 
 ```python
@@ -104,6 +122,7 @@ llm = LLM("ollama/gpt-oss", api_base="http://localhost:11434")
 llm = LLM("openai/gpt-oss", api_base="http://localhost:4000")
 
 # LLM APIs - must also set API key via environment variable
+llm = LLM("aiml/openai/gpt-5-5")
 llm = LLM("gpt-5.2")
 llm = LLM("claude-opus-4-5-20251101")
 llm = LLM("gemini/gemini-3-pro-preview")
